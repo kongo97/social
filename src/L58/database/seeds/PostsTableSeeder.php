@@ -12,6 +12,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        Post::create(['text' => 'Prova3']);
+        Post::create(['text' => 'Prova3', 'id_user' => 1]);
     }
 }
