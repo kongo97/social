@@ -7,13 +7,13 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Post</div>
+                    <div class="card-header">Follow</div>
                     <div class="card-body">
-                        <a href="{{ url('/post/create') }}" class="btn btn-success btn-sm" title="Add New Post">
+                        <a href="{{ url('/follow/create') }}" class="btn btn-success btn-sm" title="Add New Follow">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/post', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/follow', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                             <span class="input-group-append">
@@ -30,26 +30,26 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Text</th><th>Id User</th><th>Actions</th>
+                                        <th>#</th><th>Id Follower</th><th>Id Followed</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($post as $item)
+                                @foreach($follow as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->text }}</td><td>{{ $item->id_user }}</td>
+                                        <td>{{ $item->id_follower }}</td><td>{{ $item->id_followed }}</td>
                                         <td>
-                                            <a href="{{ url('/post/' . $item->id) }}" title="View Post"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/post/' . $item->id . '/edit') }}" title="Edit Post"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/follow/' . $item->id) }}" title="View Follow"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/follow/' . $item->id . '/edit') }}" title="Edit Follow"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'url' => ['/post', $item->id],
+                                                'url' => ['/follow', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-sm',
-                                                        'title' => 'Delete Post',
+                                                        'title' => 'Delete Follow',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
@@ -58,7 +58,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $post->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="pagination-wrapper"> {!! $follow->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>

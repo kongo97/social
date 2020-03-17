@@ -12,6 +12,22 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        Post::create(['text' => 'Prova3', 'id_user' => 1]);
+        Post::create(['text' => 'PRIMO post di Simo', 'id_user' => 1]);
+
+        Post::create(['text' => 'PRIMO post di Anto', 'id_user' => 2]);
+
+        Post::create(['text' => 'PRIMO post di Lori', 'id_user' => 3]);
+
+        Post::create(['text' => 'SECONDO post di Simo', 'id_user' => 1]);
+
+        Post::create(['text' => 'SECONDO post di Anto', 'id_user' => 2]);
+
+        Post::create(['text' => 'SECONDO post di Lori', 'id_user' => 3]);
+
+        Post::create(['text' => 'TERZO post di Simo', 'id_user' => 1]);
+
+        Post::create(['text' => 'TERZO post di Anto', 'id_user' => 2]);
+
+        Post::create(['text' => 'TERZO post di Lori', 'id_user' => 3]);
     }
 }

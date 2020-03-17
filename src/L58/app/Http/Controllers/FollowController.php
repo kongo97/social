@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Post;
+use App\Follow;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class FollowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +21,14 @@ class PostController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $post = Post::where('text', 'LIKE', "%$keyword%")
+            $follow = Follow::where('id_follower', 'LIKE', "%$keyword%")
+                ->orWhere('id_followed', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $post = Post::latest()->paginate($perPage);
+            $follow = Follow::latest()->paginate($perPage);
         }
 
-        return view('post.index', compact('post'));
+        return view('follow.index', compact('follow'));
     }
 
     /**
@@ -37,7 +38,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('follow.create');
     }
 
     /**
@@ -50,13 +51,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'text' => 'required',
+			'id_follower' => 'required',
+			'id_followed' => 'required'
 		]);
         $requestData = $request->all();
         
-        Post::create($requestData);
+        Follow::create($requestData);
 
-        return redirect('post')->with('flash_message', 'Post added!');
+        return redirect('follow')->with('flash_message', 'Follow added!');
     }
 
     /**
@@ -68,9 +70,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $follow = Follow::findOrFail($id);
 
-        return view('post.show', compact('post'));
+        return view('follow.show', compact('follow'));
     }
 
     /**
@@ -82,9 +84,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $follow = Follow::findOrFail($id);
 
-        return view('post.edit', compact('post'));
+        return view('follow.edit', compact('follow'));
     }
 
     /**
@@ -98,14 +100,15 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'text' => 'required'
+			'id_follower' => 'required',
+			'id_followed' => 'required'
 		]);
         $requestData = $request->all();
         
-        $post = Post::findOrFail($id);
-        $post->update($requestData);
+        $follow = Follow::findOrFail($id);
+        $follow->update($requestData);
 
-        return redirect('post')->with('flash_message', 'Post updated!');
+        return redirect('follow')->with('flash_message', 'Follow updated!');
     }
 
     /**
@@ -117,8 +120,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::destroy($id);
+        Follow::destroy($id);
 
-        return redirect('post')->with('flash_message', 'Post deleted!');
+        return redirect('follow')->with('flash_message', 'Follow deleted!');
     }
 }
